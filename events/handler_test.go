@@ -1,8 +1,9 @@
-package object_test
+package events_test
 
 import (
 	"testing"
 
+	"github.com/SevereCloud/vksdk/events"
 	"github.com/SevereCloud/vksdk/object"
 	"github.com/stretchr/testify/assert"
 )
@@ -10,8 +11,8 @@ import (
 func TestMessageNewObject_UnmarshalJSON(t *testing.T) {
 	t.Parallel()
 
-	f := func(b []byte, want object.MessageNewObject, wantErr bool) {
-		var obj object.MessageNewObject
+	f := func(b []byte, want events.MessageNewObject, wantErr bool) {
+		var obj events.MessageNewObject
 
 		err := obj.UnmarshalJSON(b)
 		if (err != nil) != wantErr {
@@ -23,17 +24,17 @@ func TestMessageNewObject_UnmarshalJSON(t *testing.T) {
 
 	f(
 		[]byte(""),
-		object.MessageNewObject{},
+		events.MessageNewObject{},
 		true,
 	)
 	f(
 		[]byte(`{"id":1}`),
-		object.MessageNewObject{Message: object.MessagesMessage{ID: 1}},
+		events.MessageNewObject{Message: object.MessagesMessage{ID: 1}},
 		false,
 	)
 	f(
 		[]byte(`{"message":{"id":1},"client_info":{}}`),
-		object.MessageNewObject{Message: object.MessagesMessage{ID: 1}},
+		events.MessageNewObject{Message: object.MessagesMessage{ID: 1}},
 		false,
 	)
 }
