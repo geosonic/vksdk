@@ -192,7 +192,7 @@ func TestVK_Execute_error(t *testing.T) {
 
 	var response int
 
-	err := vkGroup.Execute(`API.users.get({user_id:-1});return 1;`, &response)
+	err := vkGroup.Execute(`API.users.get({user_id:-1});return 1;`, api.Params{}, &response)
 	assert.Error(t, err)
 	assert.Equal(t, 1, response)
 }
@@ -206,7 +206,7 @@ func TestVK_Execute_object(t *testing.T) {
 		Text string `json:"text"`
 	}
 
-	err := vkGroup.Execute(`return {text: "hello"};`, &response)
+	err := vkGroup.Execute(`return {text: "hello"};`, api.Params{}, &response)
 	assert.NoError(t, err)
 	assert.Equal(t, "hello", response.Text)
 }
