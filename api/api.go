@@ -322,17 +322,15 @@ func (vk *VK) RequestUnmarshal(method string, params Params, obj interface{}) er
 // Execute a universal method for calling a sequence of other methods while saving and filtering interim results.
 //
 // https://vk.com/dev/Execute
-func (vk *VK) Execute(code string, obj interface{}) error {
+func (vk *VK) Execute(code string, params Params, obj interface{}) error {
 	token := vk.AccessToken
 	if vk.IsPoolClient {
 		token = vk.tokenPool.Get()
 	}
 
-	params := Params{
-		"code":         code,
-		"access_token": token,
-		"v":            vk.Version,
-	}
+	params["code"] = code
+	params["access_token"] = token
+	params["v"] = vk.Version
 
 	resp, err := vk.Handler("execute", params)
 
